@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "late-forest-2223",
+	"name": "election-rss",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-09-25",
 	"observability": {
