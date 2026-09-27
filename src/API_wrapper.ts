@@ -1,4 +1,6 @@
 import { get_elections_from_district } from './elections';
+import { random_quote } from './random_quotes';
+import { ratelimit } from './ratelimiter';
 import { get_district_from_ZIP, get_elections_from_ZIP } from './ZIPs';
 
 export async function wrap(request: Request, env: Env, ctx: any) : Promise<Response> {
@@ -20,6 +22,18 @@ export async function wrap(request: Request, env: Env, ctx: any) : Promise<Respo
     });
 
 	try {
+		if(await ratelimit(request, env, 10)){
+			return new Response(JSON.stringify({
+				ok:false,
+				message: '429 Too Many Requests. You are being ratelimited, try again in a few minutes.'
+			}),{
+				status: 429,
+				headers:{
+					'Content-Type':'application/json',
+					'Cache-Control':'no-cache',
+				}
+			});
+		}
         let out;
 		if (pathname.startsWith('/district/')) {
             if(input === '') return no_input_response;
@@ -47,7 +61,7 @@ export async function wrap(request: Request, env: Env, ctx: any) : Promise<Respo
 		return new Response(
 			JSON.stringify({
 				ok: true,
-				message: 'No error.',
+				message: random_quote(),
 				results: out,
 			}),
 			{
@@ -63,7 +77,7 @@ export async function wrap(request: Request, env: Env, ctx: any) : Promise<Respo
 		return new Response(
 			JSON.stringify({
 				ok: false,
-				message: error,
+				message: String(error),
 			}),
 			{
 				status: 500,
