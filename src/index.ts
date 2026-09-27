@@ -1,10 +1,8 @@
+import { wrap } from "./API_wrapper";
+import { get_district_from_ZIP } from "./ZIPs";
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const pathname = new URL(request.url).pathname;
-
-		
-		
-		
-		return new Response('404 Not Found.',{status: 404});
+		return wrap(request, env, ctx);
 	},
 } satisfies ExportedHandler<Env>;
