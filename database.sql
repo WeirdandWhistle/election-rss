@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "analytics_zip" (zip TEXT, count BIGINT);
 CREATE TABLE IF NOT EXISTS "analytics_district" (district TEXT, count BIGINT);
 CREATE TABLE IF NOT EXISTS "analytics_useragent" (ua_full TEXT, ua_name TEXT, ua_version TEXT, ua_category TEXT, ts BIGINT);
 CREATE TABLE IF NOT EXISTS "analytics_timestamp" (minute_ts BIGINT, count BIGINT);
-CREATE TABLE IF NOT EXISTS "analytics_responsetime" (endpoint TEXT, ts BIGINT, responsetime_ms INT);
+CREATE TABLE IF NOT EXISTS "analytics_responsetime" (endpoint TEXT, ts BIGINT, responsetime_ms INT, code INT);
 
 CREATE TABLE IF NOT EXISTS "districts"(
 "state_fips", "state_abbr", "zip", "cd");

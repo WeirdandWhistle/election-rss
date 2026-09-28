@@ -1,5 +1,6 @@
 import { get_endpoint, update_endpoint_anylitics } from "./endpoints";
 import { update_ip_anylitics } from "./ip";
+import { update_ua_analytics } from "./useragent";
 import { update_zip_anylitics } from "./zip";
 
 export async function update_anylitics(request:Request, env:Env, ctx:any) {
@@ -7,4 +8,6 @@ export async function update_anylitics(request:Request, env:Env, ctx:any) {
     await update_endpoint_anylitics(env, endpoint);
     await update_ip_anylitics(env, String(request.headers.get('CF-Connecting-IP')));
     await update_zip_anylitics(request, env, endpoint);
+    await update_ua_analytics(request, env);
+    
 }
