@@ -15,5 +15,8 @@
     "typescript": "^5.5.2",
     "vitest": "~4.1.0",
     "wrangler": "^4.141.0"
+  },
+  "dependencies": {
+    "ua-parser-js": "^2.0.10"
   }
 }

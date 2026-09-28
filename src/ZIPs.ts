@@ -1,6 +1,6 @@
 import { get_elections_from_district, Election } from "./elections";
 
-interface District {
+export interface District {
     state_code: string;
     state: string;
     zip: string;

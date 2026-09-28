@@ -1,5 +1,16 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS "ratelimit" (ip TEXT, requests TEXT, ttl BIGINT);
+
+CREATE TABLE IF NOT EXISTS "analytics_ip" (ip TEXT, count BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_endpoint" (endpoint TEXT, count BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_zip" (zip TEXT, count BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_district" (district TEXT, count BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_useragent" (ua_full TEXT, ua_name TEXT, ua_version TEXT, ua_category TEXT, ts BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_timestamp" (minute_ts BIGINT, count BIGINT);
+CREATE TABLE IF NOT EXISTS "analytics_responsetime" (endpoint TEXT, ts BIGINT, responsetime_ms INT);
+
 CREATE TABLE IF NOT EXISTS "districts"(
 "state_fips", "state_abbr", "zip", "cd");
 INSERT INTO districts VALUES('01','AL','31905','3');
