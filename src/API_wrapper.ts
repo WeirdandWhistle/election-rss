@@ -1,6 +1,7 @@
 import { get_elections_from_district } from './elections';
 import { random_quote } from './random_quotes';
 import { ratelimit } from './ratelimiter';
+import { load_zip_rss_feed, load_zip_rss_json } from './rss';
 import { get_district_from_ZIP, get_elections_from_ZIP } from './ZIPs';
 
 export async function wrap(request: Request, env: Env, ctx: any) : Promise<Response> {
@@ -44,7 +45,20 @@ export async function wrap(request: Request, env: Env, ctx: any) : Promise<Respo
         } else if (pathname.startsWith('/zip/')){
             if(input === '') return no_input_response;
             out = await get_elections_from_ZIP(env, input);
-        }
+        } else if (pathname.startsWith('/rss/')){
+			if(input === '') return no_input_response;
+			if(input.endsWith('.json')) out = await load_zip_rss_json(env, new URL(request.url).origin, input.split('.')[0])
+			if(input.endsWith('.rss')){ 
+				out = await load_zip_rss_feed(env, new URL(request.url).origin, input.split('.')[0]);
+				return new Response(out, {
+					status: 200,
+					headers:{
+						'Content-Type':'application/xml',
+						'Cache-Control':'public, max-age=216000'
+					}
+				});
+			}
+		}
 
         else {
             return new Response(JSON.stringify({
